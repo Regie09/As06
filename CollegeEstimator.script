@@ -17,18 +17,23 @@ $(document).ready(function(){
 
   // pre-fill defaults for first loan year
   var defaultYear = loans[0].loan_year;
-  $("#loan_year0" + 1).value = defaultYear++;
+  $("#loan_year0" + 1).val(defaultYear++);
   var defaultLoanAmount = loans[0].loan_amount;
-  $("#loan_amt0" + 1).value = defaultLoanAmount.toFixed(2);
+  $("#loan_amt0" + 1).val(defaultLoanAmount.toFixed(2));
   var defaultInterestRate = loans[0].loan_int_rate;
-  $("#loan_int0" + 1).value = defaultInterestRate;
+  $("#loan_int0" + 1).val(defaultInterestRate);
   var loanWithInterest = loans[0].loan_amount * (1 + loans[0].loan_int_rate);
-  $("#loan_bal0" + 1).innerHTML = toComma(loanWithInterest.toFixed(2));
+  $("#loan_bal0" + 1).html(toComma(loanWithInterest.toFixed(2)));
 
 
   
   // pre-fill defaults for other loan years
   for(var i=2; i<6; i++) {
+    $("#loan_year0" + i).val(defaultYear++).attr({
+      disable: true,
+      "style.backgroundColor": "gray",
+      "style.color": "white"
+    });
     document.getElementById("loan_year0" + i).value = defaultYear++;
     document.getElementById("loan_year0" + i).disabled = true;
     document.getElementById("loan_year0" + i).style.backgroundColor = "gray";
@@ -52,7 +57,7 @@ $(document).ready(function(){
   });
   
   // set focus to first year: messes up codepen
-  // $("#loan_year01").focus();
+  $("#loan_year01").focus();
   $("#loan_year01").blur( function() {
     updateLoansArray();
   });
@@ -69,5 +74,9 @@ function updateLoansArray() {
   for(var i=1; i<5; i++) {
     loans[i].loan_year = loans[0].loan_year + i;
     $("#loan_year0"+ (i+1) ).val(loans[i].loan_year);
+    
+    if (loans.test(loans) == false) {
+      alert("Invalid Year entry. Please enter a four digit year.");
+    $("#loan_year0").val(2020)}
   }
 }
